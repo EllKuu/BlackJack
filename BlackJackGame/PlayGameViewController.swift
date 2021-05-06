@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PlayGameViewController.swift
 //  BlackJackGame
 //
 //  Created by elliott kung on 2021-05-06.
@@ -7,13 +7,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class PlayGameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
 
+        view.backgroundColor = .red
+    }
+    
 
 }
-

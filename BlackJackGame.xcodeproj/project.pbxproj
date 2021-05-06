@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		B2195D062644373D00C5F883 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2195D052644373D00C5F883 /* AppDelegate.swift */; };
 		B2195D082644373D00C5F883 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2195D072644373D00C5F883 /* SceneDelegate.swift */; };
-		B2195D0A2644373D00C5F883 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2195D092644373D00C5F883 /* ViewController.swift */; };
+		B2195D0A2644373D00C5F883 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2195D092644373D00C5F883 /* MenuViewController.swift */; };
 		B2195D0D2644373D00C5F883 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2195D0B2644373D00C5F883 /* Main.storyboard */; };
 		B2195D102644373D00C5F883 /* BlackJackGame.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B2195D0E2644373D00C5F883 /* BlackJackGame.xcdatamodeld */; };
 		B2195D122644373F00C5F883 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2195D112644373F00C5F883 /* Assets.xcassets */; };
 		B2195D152644373F00C5F883 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2195D132644373F00C5F883 /* LaunchScreen.storyboard */; };
 		B2195D202644373F00C5F883 /* BlackJackGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2195D1F2644373F00C5F883 /* BlackJackGameTests.swift */; };
 		B2195D2B2644373F00C5F883 /* BlackJackGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2195D2A2644373F00C5F883 /* BlackJackGameUITests.swift */; };
+		B2195D392644A31F00C5F883 /* PlayGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2195D382644A31F00C5F883 /* PlayGameViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +40,7 @@
 		B2195D022644373D00C5F883 /* BlackJackGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackJackGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2195D052644373D00C5F883 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2195D072644373D00C5F883 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B2195D092644373D00C5F883 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B2195D092644373D00C5F883 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		B2195D0C2644373D00C5F883 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B2195D0F2644373D00C5F883 /* BlackJackGame.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BlackJackGame.xcdatamodel; sourceTree = "<group>"; };
 		B2195D112644373F00C5F883 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,6 +52,7 @@
 		B2195D262644373F00C5F883 /* BlackJackGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlackJackGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2195D2A2644373F00C5F883 /* BlackJackGameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackJackGameUITests.swift; sourceTree = "<group>"; };
 		B2195D2C2644373F00C5F883 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2195D382644A31F00C5F883 /* PlayGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayGameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +105,8 @@
 			children = (
 				B2195D052644373D00C5F883 /* AppDelegate.swift */,
 				B2195D072644373D00C5F883 /* SceneDelegate.swift */,
-				B2195D092644373D00C5F883 /* ViewController.swift */,
+				B2195D092644373D00C5F883 /* MenuViewController.swift */,
+				B2195D382644A31F00C5F883 /* PlayGameViewController.swift */,
 				B2195D0B2644373D00C5F883 /* Main.storyboard */,
 				B2195D112644373F00C5F883 /* Assets.xcassets */,
 				B2195D132644373F00C5F883 /* LaunchScreen.storyboard */,
@@ -261,8 +264,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2195D0A2644373D00C5F883 /* ViewController.swift in Sources */,
+				B2195D0A2644373D00C5F883 /* MenuViewController.swift in Sources */,
 				B2195D062644373D00C5F883 /* AppDelegate.swift in Sources */,
+				B2195D392644A31F00C5F883 /* PlayGameViewController.swift in Sources */,
 				B2195D102644373D00C5F883 /* BlackJackGame.xcdatamodeld in Sources */,
 				B2195D082644373D00C5F883 /* SceneDelegate.swift in Sources */,
 			);
