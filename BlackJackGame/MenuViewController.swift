@@ -17,20 +17,13 @@ class MenuViewController: UIViewController {
     
     var textLabel: UILabel = {
         let label = UILabel()
-        label.text = "How many decks would you like to play with?"
+        label.text = "BlackJack"
         label.font = UIFont(name: "charter black", size: 25)
         label.numberOfLines = 2
         label.textAlignment = .center
         return label
     }()
     
-    var deckSlider: UISlider = {
-        let slider = UISlider()
-        slider.minimumValue = 1
-        slider.maximumValue  = 8
-        slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
-        return slider
-    }()
     
     var playButton: UIButton = {
         let btn = UIButton(type: .system)
@@ -40,6 +33,8 @@ class MenuViewController: UIViewController {
         btn.addTarget(self, action: #selector(startGame), for: .touchUpInside)
         btn.layer.cornerRadius = 50
         btn.layer.borderWidth = 1
+        btn.layer.shadowOpacity = 0.5
+        btn.layer.shadowOffset = CGSize(width: 5, height: 5)
         
         return btn
     }()
@@ -52,15 +47,18 @@ class MenuViewController: UIViewController {
         btn.addTarget(self, action: #selector(savedGames), for: .touchUpInside)
         btn.layer.cornerRadius = 50
         btn.layer.borderWidth = 1
+        btn.layer.shadowOpacity = 0.5
+        btn.layer.shadowOffset = CGSize(width: 5, height: 5)
         
         return btn
     }()
     
     var numOfDecksImage: UIImageView = {
         let deckImage = UIImageView()
-        deckImage.image = UIImage(systemName: "1.square")
+        deckImage.image = UIImage(systemName: "rectangle.on.rectangle")
         deckImage.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
         deckImage.contentMode = .scaleAspectFit
+        deckImage.tintColor = .black
         
         
         return deckImage
@@ -71,14 +69,30 @@ class MenuViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .green
         self.title = "BlackJack"
+        navigationController?.navigationBar.barTintColor = .green
         
         setupMenuLayout()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // Hide the navigation bar on the this view controller
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        // Show the navigation bar on other view controllers
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
 
     /// shuffles deck of cards player can choose how many decks 1-8
     func setupMenuLayout(){
         
-        let menuStackView = UIStackView(arrangedSubviews: [textLabel, numOfDecksImage, savedGamesButton ,playButton, deckSlider])
+        let menuStackView = UIStackView(arrangedSubviews: [textLabel, numOfDecksImage, savedGamesButton ,playButton])
         menuStackView.axis = .vertical
         menuStackView.distribution = .fillEqually
         menuStackView.alignment = .fill
@@ -95,34 +109,6 @@ class MenuViewController: UIViewController {
         menuStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive = true
         
         
-    }
-    
-    @objc func sliderValueChanged(){
-        numberOfDecks = Int(deckSlider.value)
-        var numImage = ""
-        switch Int(deckSlider.value) {
-        case 1:
-            numImage = "1.square"
-        case 2:
-            numImage = "2.square"
-        case 3:
-            numImage = "3.square"
-        case 4:
-            numImage = "4.square"
-        case 5:
-            numImage = "5.square"
-        case 6:
-            numImage = "6.square"
-        case 7:
-            numImage = "7.square"
-        case 8:
-            numImage = "8.square"
-        default:
-            numImage = "1.square"
-        }
-        DispatchQueue.main.async {
-            self.numOfDecksImage.image = UIImage(systemName: numImage)
-        }
     }
     
     @objc func startGame(){
