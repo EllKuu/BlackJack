@@ -43,6 +43,7 @@ class PlayGameViewController: UIViewController {
     
     @objc func sliderValueChanged(){
         self.selectNumberOfDecks.sliderValueChanged()
+        numberOfDecks = Int(selectNumberOfDecks.deckSlider.value)
     }
     
     @objc func startGame(){
@@ -51,6 +52,7 @@ class PlayGameViewController: UIViewController {
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut) {
             self.selectNumberOfDecks.startGame()
         }
+        print(numberOfDecks)
     }
     
     
