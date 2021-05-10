@@ -7,11 +7,17 @@
 
 import UIKit
 
+protocol NumberOfDecksProtocol: NSObjectProtocol {
+    func sliderValueChanged()
+    
+    func gameStart()
+}
 
-class NumberOfDecksView: UIStackView{
+class NumberOfDecksView: UIView{
 
-
-    var textLabel: UILabel = {
+    weak var numberOfDecksDelegate: NumberOfDecksProtocol? = nil
+    
+    lazy var textLabel: UILabel = {
         let label = UILabel()
         label.text = "How many decks would you like to play with?"
         label.font = UIFont(name: "charter black", size: 25)
@@ -20,7 +26,7 @@ class NumberOfDecksView: UIStackView{
         return label
     }()
     
-    var deckSlider: UISlider = {
+    lazy var deckSlider: UISlider = {
         let slider = UISlider()
         slider.minimumValue = 1
         slider.maximumValue  = 8
@@ -29,7 +35,7 @@ class NumberOfDecksView: UIStackView{
         return slider
     }()
     
-    var numOfDecksImage: UIImageView = {
+   lazy var numOfDecksImage: UIImageView = {
         let deckImage = UIImageView()
         deckImage.image = UIImage(systemName: "1.square")
         deckImage.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
@@ -40,7 +46,7 @@ class NumberOfDecksView: UIStackView{
         return deckImage
     }()
     
-    var playButton: UIButton = {
+    lazy var playButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setTitle("Play", for: .normal)
         btn.titleLabel?.font = .boldSystemFont(ofSize: 30)
@@ -54,60 +60,64 @@ class NumberOfDecksView: UIStackView{
         return btn
     }()
     
-    var menuStackView = UIStackView()
-    
-    func setupMenuLayout() -> UIStackView{
-        
-        
-        menuStackView = UIStackView(arrangedSubviews: [textLabel, numOfDecksImage, deckSlider, playButton])
-        menuStackView.axis = .vertical
-        menuStackView.distribution = .fillEqually
-        menuStackView.alignment = .fill
-        menuStackView.spacing = 25
-        
-        return menuStackView
-       
+    lazy var menuStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [textLabel, numOfDecksImage, deckSlider, playButton])
+        sv.axis = .vertical
+        sv.distribution = .fillEqually
+        sv.alignment = .fill
+        sv.spacing = 25
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        return sv
+    }()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
     }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupView()
+    }
+    
+    private func setupView(){
+        addSubview(menuStackView)
+        setupLayout()
+    }
+    
+    
+    func setupLayout(){
+        
+        
+        NSLayoutConstraint.activate([
+            menuStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 50),
+            menuStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            menuStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            menuStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50)
+        ])
+
+    }
+
     
     
     @objc func sliderValueChanged(){
-        var numImage = ""
-        switch Int(deckSlider.value) {
-        case 1:
-            numImage = "1.square"
-        case 2:
-            numImage = "2.square"
-        case 3:
-            numImage = "3.square"
-        case 4:
-            numImage = "4.square"
-        case 5:
-            numImage = "5.square"
-        case 6:
-            numImage = "6.square"
-        case 7:
-            numImage = "7.square"
-        case 8:
-            numImage = "8.square"
-        default:
-            numImage = "1.square"
-        }
-        DispatchQueue.main.async {
-            self.numOfDecksImage.image = UIImage(systemName: numImage)
-        }
+        self.numberOfDecksDelegate?.sliderValueChanged()
+
     }
     
     @objc func startGame(){
-       print("play animation")
         
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut) {
-            
+        self.numberOfDecksDelegate?.gameStart()
+//       print("play animation")
+//
+//        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut) {
+//
 //            self.textLabel.transform = CGAffineTransform(translationX: 0, y: -200)
 //            self.textLabel.alpha = 0
-            self.menuStackView.transform = CGAffineTransform(translationX: 0, y: -200)
-            self.menuStackView.alpha = 0
-            
-        }
+//            self.menuStackView.transform = CGAffineTransform(translationX: 0, y: -200)
+//            self.menuStackView.alpha = 0
+//
+//        }
 //        completion: { (_) in
 //            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut) {
 //
