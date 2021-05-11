@@ -14,6 +14,7 @@ class PlayGameViewController: UIViewController {
     var numberOfDecks: Int?
     
     var numberOfDecksStackView: NumberOfDecksView!
+    var playBlackJackView: PlayBlackJackView!
     
     
     
@@ -24,6 +25,11 @@ class PlayGameViewController: UIViewController {
         selectNumberOfDecks.numberOfDecksDelegate = self
         numberOfDecksStackView = selectNumberOfDecks
         view.addSubview(selectNumberOfDecks)
+        
+        let playBlackJack = PlayBlackJackView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        playBlackJack.alpha = 0
+        playBlackJackView = playBlackJack
+        view.addSubview(playBlackJack)
         
         view.backgroundColor = .red
         navigationController?.navigationBar.barTintColor = .red
@@ -62,13 +68,22 @@ extension PlayGameViewController: NumberOfDecksProtocol{
     
     func gameStart() {
         print("play animation")
-         
-         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut) {
-             
-             self.numberOfDecksStackView.transform = CGAffineTransform(translationX: 0, y: -200)
-             self.numberOfDecksStackView.alpha = 0
-             
-         }
+        
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut) {
+            
+            self.numberOfDecksStackView.transform = CGAffineTransform(translationX: 0, y: -200)
+            self.numberOfDecksStackView.alpha = 0
+            
+        }
+        completion: { (_) in
+            UIView.animate(withDuration: 1, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn) {
+                
+                self.playBlackJackView.alpha = 1
+                
+            }
+            
+            print("animate over")
+        }
     }
     
     

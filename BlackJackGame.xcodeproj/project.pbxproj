@@ -18,6 +18,7 @@
 		B2195D2B2644373F00C5F883 /* BlackJackGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2195D2A2644373F00C5F883 /* BlackJackGameUITests.swift */; };
 		B2195D392644A31F00C5F883 /* PlayGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2195D382644A31F00C5F883 /* PlayGameViewController.swift */; };
 		B2195D3B26486A5D00C5F883 /* NumberOfDecksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2195D3A26486A5D00C5F883 /* NumberOfDecksView.swift */; };
+		B2522506264AC7B500CB0D14 /* PlayBlackJackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2522505264AC7B500CB0D14 /* PlayBlackJackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		B2195D2C2644373F00C5F883 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2195D382644A31F00C5F883 /* PlayGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayGameViewController.swift; sourceTree = "<group>"; };
 		B2195D3A26486A5D00C5F883 /* NumberOfDecksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfDecksView.swift; sourceTree = "<group>"; };
+		B2522505264AC7B500CB0D14 /* PlayBlackJackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayBlackJackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				B2195D092644373D00C5F883 /* MenuViewController.swift */,
 				B2195D382644A31F00C5F883 /* PlayGameViewController.swift */,
 				B2195D3A26486A5D00C5F883 /* NumberOfDecksView.swift */,
+				B2522505264AC7B500CB0D14 /* PlayBlackJackView.swift */,
 				B2195D0B2644373D00C5F883 /* Main.storyboard */,
 				B2195D112644373F00C5F883 /* Assets.xcassets */,
 				B2195D132644373F00C5F883 /* LaunchScreen.storyboard */,
@@ -269,6 +272,7 @@
 			files = (
 				B2195D0A2644373D00C5F883 /* MenuViewController.swift in Sources */,
 				B2195D3B26486A5D00C5F883 /* NumberOfDecksView.swift in Sources */,
+				B2522506264AC7B500CB0D14 /* PlayBlackJackView.swift in Sources */,
 				B2195D062644373D00C5F883 /* AppDelegate.swift in Sources */,
 				B2195D392644A31F00C5F883 /* PlayGameViewController.swift in Sources */,
 				B2195D102644373D00C5F883 /* BlackJackGame.xcdatamodeld in Sources */,
