@@ -11,7 +11,8 @@ import UIKit
 class PlayGameViewController: UIViewController {
     
     
-    var numberOfDecks: Int?
+    var numberOfDecks: Int = 1
+    var numberArray: [Int]?
     
     var numberOfDecksStackView: NumberOfDecksView!
     var playBlackJackView: PlayBlackJackView!
@@ -36,11 +37,19 @@ class PlayGameViewController: UIViewController {
         
     }
     
+    func setupDeck(){
+        let numberOfCards = self.numberOfDecks * 52
+        numberArray = Array(1...numberOfCards)
+        //numberArray?.shuffle()
+        print(numberArray)
+    }
+    
 } // end of PlayGameViewController
 
 extension PlayGameViewController: NumberOfDecksProtocol{
     func sliderValueChanged() {
         var numImage = ""
+        numberOfDecks = Int(numberOfDecksStackView.deckSlider.value)
         switch Int(numberOfDecksStackView.deckSlider.value) {
         case 1:
             numImage = "1.square"
@@ -82,7 +91,7 @@ extension PlayGameViewController: NumberOfDecksProtocol{
                 
             }
             
-            print("animate over")
+            self.setupDeck()
         }
     }
     

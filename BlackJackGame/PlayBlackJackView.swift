@@ -128,7 +128,7 @@ class PlayBlackJackView: UIView {
     lazy var playersHandStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [playersHandImages, dealersHandImages])
         sv.axis = .horizontal
-        sv.distribution = .equalSpacing
+        sv.distribution = .fillEqually
         sv.spacing = 10
         sv.layer.borderWidth = 1
         sv.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -157,13 +157,7 @@ class PlayBlackJackView: UIView {
         btn.layer.borderWidth = 1
         btn.layer.shadowOpacity = 0.5
         btn.layer.shadowOffset = CGSize(width: 5, height: 5)
-        btn.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
-        
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        
-        btn.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        btn.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
+     
         return btn
     }()
     
@@ -177,12 +171,6 @@ class PlayBlackJackView: UIView {
         btn.layer.borderWidth = 1
         btn.layer.shadowOpacity = 0.5
         btn.layer.shadowOffset = CGSize(width: 5, height: 5)
-        btn.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
-        
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        
-        btn.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        btn.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         return btn
     }()
@@ -190,30 +178,15 @@ class PlayBlackJackView: UIView {
     lazy var actionButtonStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [stayBtn, hitBtn])
         sv.axis = .horizontal
-        sv.distribution = .equalCentering
+        sv.distribution = .fillEqually
         sv.spacing = 10
         sv.layer.borderWidth = 1
         
         sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        return sv
-    }()
-    
-    
-    lazy var fullViewStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [gameInfoStackView, dealersHandStackView, playersHandStackView, actionButtonStackView])
-        sv.axis = .vertical
-        sv.distribution = .equalSpacing
-        sv.spacing = 5
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.layer.borderWidth = 5
         
         return sv
     }()
-    
-    
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -226,31 +199,34 @@ class PlayBlackJackView: UIView {
     
     
     private func setupView(){
-        addSubview(fullViewStackView)
+        addSubview(gameInfoStackView)
+        addSubview(dealersHandStackView)
+        addSubview(playersHandStackView)
+        addSubview(actionButtonStackView)
         setupLayout()
     }
     
     private func setupLayout(){
         NSLayoutConstraint.activate([
-            fullViewStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            fullViewStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            fullViewStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            fullViewStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            gameInfoStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            gameInfoStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            gameInfoStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             
             
+            dealersHandStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            dealersHandStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            dealersHandStackView.topAnchor.constraint(equalTo: gameInfoStackView.bottomAnchor, constant: 50),
             
-           
+            playersHandStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            playersHandStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            playersHandStackView.topAnchor.constraint(equalTo: dealersHandStackView.bottomAnchor, constant: 50),
             
-//            playersHandStackView.heightAnchor.constraint(equalToConstant: fullViewStackView.frame.height),
-//            playersHandStackView.widthAnchor.constraint(equalToConstant: fullViewStackView.frame.width),
-//            playersHandStackView.centerYAnchor.constraint(equalTo: fullViewStackView.centerYAnchor),
-//            playersHandStackView.centerXAnchor.constraint(equalTo: fullViewStackView.centerXAnchor),
-//
-//            dealersHandStackView.heightAnchor.constraint(equalToConstant: fullViewStackView.frame.height),
-//            dealersHandStackView.widthAnchor.constraint(equalToConstant: fullViewStackView.frame.width),
-//            dealersHandStackView.centerYAnchor.constraint(equalTo: fullViewStackView.centerYAnchor),
-//            dealersHandStackView.centerXAnchor.constraint(equalTo: fullViewStackView.centerXAnchor),
-//
+            actionButtonStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            actionButtonStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            actionButtonStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -50),
+
+            
+            
         ])
     }
     
