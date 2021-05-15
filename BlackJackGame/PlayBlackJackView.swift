@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol PlayBlackJackProtocol: NSObjectProtocol {
+    func dealCards()
+}
+
 class PlayBlackJackView: UIView {
 
     // Game Information
@@ -29,11 +33,12 @@ class PlayBlackJackView: UIView {
     
     lazy var deckImage: UIImageView = {
         let imgView = UIImageView()
-        imgView.image = UIImage(systemName: "house")
+        imgView.image = UIImage(named: "CardBack")
         
+        imgView.contentMode = .scaleAspectFit
+        imgView.backgroundColor = .clear
+        imgView.clipsToBounds = true
         imgView.translatesAutoresizingMaskIntoConstraints = false
-        
-        imgView.widthAnchor.constraint(equalToConstant: 100).isActive = true
 
         return imgView
     }()
@@ -81,57 +86,36 @@ class PlayBlackJackView: UIView {
     
     lazy var dealersHandImages: UIImageView = {
         var imgView = UIImageView()
-        imgView.image = UIImage(systemName: "house.fill")
-        imgView.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
+        imgView.image = UIImage(named: "Jack-S")
+        //imgView.frame = CGRect(x: 0, y: 0, width: 100, height: 10)
         imgView.contentMode = .scaleAspectFit
-        imgView.backgroundColor = .black
+        imgView.backgroundColor = .clear
         imgView.clipsToBounds = true
+        imgView.translatesAutoresizingMaskIntoConstraints = false
         
-        return imgView
-    }()
-    
-    lazy var playersHandImages: UIImageView = {
-        var imgView = UIImageView()
-        imgView.image = UIImage(systemName: "r.joystick")
-        imgView.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
-        imgView.contentMode = .scaleAspectFit
-        imgView.backgroundColor = .white
-        imgView.clipsToBounds = true
-        
-        
-        return imgView
-    }()
-    
-    lazy var playersHandImages1: UIImageView = {
-        var imgView = UIImageView()
-        imgView.image = UIImage(systemName: "r.joystick")
-        imgView.frame = CGRect(x: 0, y: 0, width: 50, height: 10)
-        imgView.contentMode = .scaleAspectFit
-        imgView.backgroundColor = .white
-        imgView.clipsToBounds = true
-        
+        //imgView.widthAnchor.constraint(equalToConstant: 50).isActive = true
         
         return imgView
     }()
     
     lazy var dealersHandStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [playersHandImages1, dealersHandImages])
+        let sv = UIStackView()
         sv.axis = .horizontal
         sv.distribution = .fillEqually
-        sv.spacing = 10
+        sv.spacing = 5
         sv.layer.borderWidth = 1
-        sv.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        sv.heightAnchor.constraint(equalToConstant: 120).isActive = true
         sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
     }()
     
     lazy var playersHandStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [playersHandImages, dealersHandImages])
+        let sv = UIStackView()
         sv.axis = .horizontal
         sv.distribution = .fillEqually
         sv.spacing = 10
         sv.layer.borderWidth = 1
-        sv.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        sv.heightAnchor.constraint(equalToConstant: 120).isActive = true
         sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
     }()
@@ -208,21 +192,21 @@ class PlayBlackJackView: UIView {
     
     private func setupLayout(){
         NSLayoutConstraint.activate([
-            gameInfoStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            gameInfoStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            gameInfoStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            gameInfoStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             gameInfoStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             
             
-            dealersHandStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            dealersHandStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            dealersHandStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            dealersHandStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             dealersHandStackView.topAnchor.constraint(equalTo: gameInfoStackView.bottomAnchor, constant: 50),
             
-            playersHandStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            playersHandStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            playersHandStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            playersHandStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             playersHandStackView.topAnchor.constraint(equalTo: dealersHandStackView.bottomAnchor, constant: 50),
             
-            actionButtonStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            actionButtonStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            actionButtonStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            actionButtonStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             actionButtonStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -50),
 
             
