@@ -12,11 +12,14 @@ class PlayingCard {
     
     var cardValue: Int?
     var altCardValue: Int?
+    var cardNumber: Int?
     var cardFaceImage: UIImageView?
     var cardBackImage: UIImageView?
     
+    
     init(number: Int) {
-        cardValue = number
+        cardNumber = number
+        cardFaceImage = UIImageView()
         setupPlayingCard()
     }
     
@@ -27,35 +30,24 @@ class PlayingCard {
     
     
     func setupPlayingCard(){
-//        contentMode = .scaleAspectFit
-//        backgroundColor = .clear
-//        clipsToBounds = true
-        //print(cardValue)
-        guard let value = cardValue else { return }
+        
+        guard let value = cardNumber else { return }
         switch value {
         case 1...52:
-            //print("1 deck")
             setCardValues(num: value)
         case 53...104:
-            //print("2 deck")
             setCardValues(num: 52*2 + 1 - value)
         case 105...156:
-            //print("3 deck")
             setCardValues(num: 52*3 + 1 - value)
         case 157...208:
-            //print("4 deck")
             setCardValues(num: 52*4 + 1 - value)
         case 209...260:
-            //print("5 deck")
             setCardValues(num: 52*5 + 1 - value)
         case 261...312:
-            //print("6 deck")
             setCardValues(num: 52*6 + 1 - value)
         case 313...364:
-            //print("7 deck")
             setCardValues(num: 52*7 + 1 - value)
         case 365...416:
-            //print("8 deck")
             setCardValues(num: 52*8 + 1 - value)
         default:
             print("no deck")
@@ -64,7 +56,6 @@ class PlayingCard {
     }
     
     func setCardValues(num: Int){
-        //print("\(num) : number")
         switch num {
         case 1:
             cardValue = 11
@@ -330,6 +321,13 @@ class PlayingCard {
         default:
             print("Value not included")
         }
+        cardFaceImage?.contentMode = .scaleAspectFit
+        cardFaceImage?.clipsToBounds = true
+        cardFaceImage?.backgroundColor = .clear
+        
+        cardBackImage?.contentMode = .scaleAspectFit
+        cardBackImage?.clipsToBounds = true
+        cardBackImage?.backgroundColor = .clear
     }
     
     

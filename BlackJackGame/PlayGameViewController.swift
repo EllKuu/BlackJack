@@ -12,7 +12,7 @@ class PlayGameViewController: UIViewController {
     
     
     var numberOfDecks: Int = 1
-    var numberArray: [Int]?
+    var numberArray = [Int]()
     var deck = [PlayingCard]()
     
     var numberOfDecksStackView: NumberOfDecksView!
@@ -42,18 +42,12 @@ class PlayGameViewController: UIViewController {
         let numberOfCards = self.numberOfDecks * 52
         numberArray = Array(1...numberOfCards)
         // take number array and setup cards
-        for i in numberArray!{
+        for i in numberArray{
             let p = PlayingCard(number: i)
             deck.append(p)
         }
-        //deck?.shuffle()
-        for i in deck {
-            print(i.cardValue)
-        }
-
+        deck.shuffle()
         
-        //numberArray?.shuffle()
-        //print(numberArray)
     }
     
 } // end of PlayGameViewController
@@ -116,7 +110,13 @@ extension PlayGameViewController: PlayBlackJackProtocol{
     
     func dealCards() {
         // init cards and give to stackview in playblackjackview
+
         
+        playBlackJackView.dealersHandStackView.addArrangedSubview(deck[1].cardFaceImage!)
+        playBlackJackView.dealersHandStackView.addArrangedSubview(deck[2].cardBackImage!)
+        
+        playBlackJackView.playersHandStackView.addArrangedSubview(deck[3].cardFaceImage!)
+        playBlackJackView.playersHandStackView.addArrangedSubview(deck[4].cardFaceImage!)
      
         
         
