@@ -8,10 +8,22 @@
 import UIKit
 
 protocol PlayBlackJackProtocol: NSObjectProtocol {
-    func dealCards()
+  
+    func dealHand()
+    
+    func playerHit()
+    
+    func playerStay()
+    
+    func newHand()
+    
+    
+    func probabilityGuide()
 }
 
 class PlayBlackJackView: UIView {
+    
+    weak var playBlackJackDelegate: PlayBlackJackProtocol? = nil
 
     // Game Information
     
@@ -39,16 +51,18 @@ class PlayBlackJackView: UIView {
         imgView.backgroundColor = .clear
         imgView.clipsToBounds = true
         imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dealHand)))
+        imgView.isUserInteractionEnabled = true
 
         return imgView
     }()
     
     lazy var guideBtn: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setTitle("Info", for: .normal)
+        btn.setTitle("New Hand", for: .normal)
         btn.titleLabel?.font = .boldSystemFont(ofSize: 30)
         btn.backgroundColor = .white
-        btn.addTarget(self, action: #selector(stay), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(newHand), for: .touchUpInside)
         btn.layer.cornerRadius = 5
         btn.layer.borderWidth = 1
         btn.layer.shadowOpacity = 0.5
@@ -83,20 +97,6 @@ class PlayBlackJackView: UIView {
     }()
     
     // BlackJack Hands
-    
-    lazy var dealersHandImages: UIImageView = {
-        var imgView = UIImageView()
-        imgView.image = UIImage(named: "Jack-S")
-        //imgView.frame = CGRect(x: 0, y: 0, width: 100, height: 10)
-        imgView.contentMode = .scaleAspectFit
-        imgView.backgroundColor = .clear
-        imgView.clipsToBounds = true
-        imgView.translatesAutoresizingMaskIntoConstraints = false
-        
-        //imgView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        return imgView
-    }()
     
     lazy var dealersHandStackView: UIStackView = {
         let sv = UIStackView()
@@ -150,7 +150,7 @@ class PlayBlackJackView: UIView {
         btn.setTitle("Hit", for: .normal)
         btn.titleLabel?.font = .boldSystemFont(ofSize: 30)
         btn.backgroundColor = .white
-        btn.addTarget(self, action: #selector(stay), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(hit), for: .touchUpInside)
         btn.layer.cornerRadius = 5
         btn.layer.borderWidth = 1
         btn.layer.shadowOpacity = 0.5
@@ -215,11 +215,24 @@ class PlayBlackJackView: UIView {
     }
     
     @objc func stay(){
-        
+        self.playBlackJackDelegate?.playerStay()
     }
     
     @objc func hit(){
+        self.playBlackJackDelegate?.playerHit()
         
+    }
+    
+    @objc func dealHand(){
+        self.playBlackJackDelegate?.dealHand()
+    }
+    
+    @objc func probabilityGuide(){
+        self.playBlackJackDelegate?.probabilityGuide()
+    }
+    
+    @objc func newHand(){
+        self.playBlackJackDelegate?.newHand()
     }
     
 

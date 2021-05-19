@@ -18,6 +18,29 @@ class PlayGameViewController: UIViewController {
     var numberOfDecksStackView: NumberOfDecksView!
     var playBlackJackView: PlayBlackJackView!
     
+    var playersHand = [PlayingCard]()
+    var dealersHand = [PlayingCard]()
+    
+    var playersTurn: Bool?
+    var dealersTurn: Bool?
+    
+    var playersHandTotal = 0
+    var altPlayersHandTotal = 0
+    var playerHasAce = false
+    
+    var dealersHandTotal = 0
+    var altDealersHandTotal = 0
+    var dealerHasAce = false
+    
+    enum playerHandOutcomes {
+        case playerOver21
+        case blackjack
+        case tie
+        case dealerStands17PlayersTotalIsGreater
+        case dealerOver21
+        case dealerWins
+        case playerWins
+    }
     
     
     override func viewDidLoad() {
@@ -29,6 +52,7 @@ class PlayGameViewController: UIViewController {
         view.addSubview(selectNumberOfDecks)
         
         let playBlackJack = PlayBlackJackView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        playBlackJack.playBlackJackDelegate = self
         playBlackJack.alpha = 0
         playBlackJackView = playBlackJack
         view.addSubview(playBlackJack)
@@ -98,7 +122,7 @@ extension PlayGameViewController: NumberOfDecksProtocol{
             }
             
             self.setupDeck()
-            self.dealCards()
+            self.playBlackJackView.informationLabel.text = "Tap Deck to Deal"
         }
     
     }
@@ -107,19 +131,237 @@ extension PlayGameViewController: NumberOfDecksProtocol{
 }// end of extension
 
 extension PlayGameViewController: PlayBlackJackProtocol{
+   
     
-    func dealCards() {
+    func dealHand() {
         // init cards and give to stackview in playblackjackview
-
+       
         
-        playBlackJackView.dealersHandStackView.addArrangedSubview(deck[1].cardFaceImage!)
-        playBlackJackView.dealersHandStackView.addArrangedSubview(deck[2].cardBackImage!)
+        for i in 1...4{
+            let card = removeCard()
+            print(card.cardValue!)
+            if i % 2 != 0 {
+                addCardToPlayersHand(card: card.cardFaceImage!)
+                playersHand.append(card)
+            }else{
+                if i == 2{
+                    addCardToDealersHand(card: card.cardBackImage!)
+                }else{
+                    addCardToDealersHand(card: card.cardFaceImage!)
+                }
+                dealersHand.append(card)
+            }
+            
+            playersTurn = true
+            dealersTurn = false
+            
+            calculatePlayersHand()
+            calculateDealersHand()
+            
+        }
+    } // end of dealCards
+    
+    func removeCard() -> PlayingCard{
+        let card = deck.remove(at: 0)
+        return card
+    }
+    
+    func playerHit() {
+        if let playersTurn = playersTurn {
+            if playersTurn{
+                let card = removeCard()
+                addCardToPlayersHand(card: card.cardFaceImage!)
+                playersHand.append(card)
+                calculatePlayersHand()
+            }else{
+                print("not players turn")
+            }
+        }
+    }
+    
+    func dealerHit(){
+        if let dealersTurn = dealersTurn{
+            if dealersTurn{
+                let card = removeCard()
+                addCardToDealersHand(card: card.cardFaceImage!)
+                dealersHand.append(card)
+                calculateDealersHand()
+            }
+        }
+    }
+    
+    func playerStay() {
+        print("player stay")
+        playersTurn = false
+        dealersTurn = true
+        flipDealersFaceDownCard()
+        calculateDealersHand()
+    }
+    
+    
+    func addCardToDealersHand(card: UIImageView){
+        self.playBlackJackView.dealersHandStackView.addArrangedSubview(card)
+    }
+    
+    func addCardToPlayersHand(card: UIImageView){
+        self.playBlackJackView.playersHandStackView.addArrangedSubview(card)
+    }
+    
+    func calculatePlayersHand(){
+        var total = 0
+        var altTotal = 0
+        for card in playersHand{
+            total += card.cardValue!
+            if card.cardValue! == 11{
+                altTotal += card.altCardValue!
+                playerHasAce = true
+            }else{
+                altTotal += card.cardValue!
+            }
+        }
+        playersHandTotal = total
+        altPlayersHandTotal = altTotal
+        playersHandResults(total: playersHandTotal, altTotal: altPlayersHandTotal)
         
-        playBlackJackView.playersHandStackView.addArrangedSubview(deck[3].cardFaceImage!)
-        playBlackJackView.playersHandStackView.addArrangedSubview(deck[4].cardFaceImage!)
+    }
+    
+    func calculateDealersHand(){
+        var total = 0
+        var altTotal = 0
+        for card in dealersHand{
+            total += card.cardValue!
+            if card.cardValue! == 11{
+                altTotal += card.altCardValue!
+                dealerHasAce = true
+            }else{
+                altTotal += card.cardValue!
+            }
+        }
+        dealersHandTotal = total
+        altDealersHandTotal = altTotal
+        dealersHandResults(total: dealersHandTotal, altTotal: altDealersHandTotal)
+        
+    }
+    
+    func playersHandResults(total: Int, altTotal: Int){
      
+        if total > 21 {
+            if playerHasAce {
+                if altTotal > 21{
+                    gameInformation(outcome: playerHandOutcomes.playerOver21)
+                }
+            }else{
+                gameInformation(outcome: playerHandOutcomes.playerOver21)
+            }
+            
+            flipDealersFaceDownCard()
+            // new hand
+        }
+        else if total == 21{
+            flipDealersFaceDownCard()
+            calculateDealersHand()
+        }
+    }
+    
+    func dealersHandResults(total: Int, altTotal: Int){
+        if total == 21 && playersHandTotal == 21 {
+            gameInformation(outcome: playerHandOutcomes.tie)
+        }
+        else if total == 21 && playersHandTotal != 21{
+            gameInformation(outcome: playerHandOutcomes.dealerWins)
+        }
+        else if total >= 17 && total <= 21  && total < playersHandTotal {
+            gameInformation(outcome: playerHandOutcomes.dealerStands17PlayersTotalIsGreater)
+            
+        }
+        else if total < 17 && total <= playersHandTotal {
+            if dealerHasAce {
+                if altTotal < 17 && total <= playersHandTotal {
+                    dealerHit()
+                }
+                else{
+                    dealerHit()
+                }
+            }
+            
+        }
+        else if total > 21 && playersHandTotal <= 21 {
+            if dealerHasAce{
+                if altTotal > 21 && playersHandTotal <= 21{
+                    gameInformation(outcome: playerHandOutcomes.dealerOver21)
+                }
+                else{
+                    gameInformation(outcome: playerHandOutcomes.dealerOver21)
+                }
+            }
+            
+        }
+        else if total > playersHandTotal{
+            if dealerHasAce{
+                if altTotal > playersHandTotal{
+                    gameInformation(outcome: playerHandOutcomes.dealerWins)
+                }
+                else{
+                    gameInformation(outcome: playerHandOutcomes.dealerWins)
+                }
+            }
+        }
+    }
+    
+    
+    
+    func gameInformation(outcome: playerHandOutcomes){
+        switch outcome {
+        case .playerOver21:
+            self.playBlackJackView.informationLabel.text = "Over 21, You Lose."
+        case .blackjack:
+            self.playBlackJackView.informationLabel.text = "BlackJack."
+        case .tie:
+            self.playBlackJackView.informationLabel.text = "Tie."
+        case .dealerStands17PlayersTotalIsGreater:
+            self.playBlackJackView.informationLabel.text = "Dealer stands 17, players hand wins."
+        case .dealerOver21:
+            self.playBlackJackView.informationLabel.text = "Dealer over 21, players hand wins."
+        case .dealerWins:
+            self.playBlackJackView.informationLabel.text = "Dealer Wins."
+        default:
+            print("default")
+        }
         
         
+        
+    }
+    
+    func newHand(){
+        // clear stackviews and arrays
+        for i in self.playBlackJackView.dealersHandStackView.arrangedSubviews{
+            i.removeFromSuperview()
+        }
+        
+        for i in self.playBlackJackView.playersHandStackView.arrangedSubviews{
+            i.removeFromSuperview()
+        }
+        
+        dealersHand.removeAll()
+        playersHand.removeAll()
+        
+        playerHasAce = false
+        dealerHasAce = false
+        
+    }
+    
+    
+    
+    func flipDealersFaceDownCard(){
+        
+        self.playBlackJackView.dealersHandStackView.arrangedSubviews[0].removeFromSuperview()
+        
+        self.playBlackJackView.dealersHandStackView.insertArrangedSubview(dealersHand[0].cardFaceImage!, at: 0)
+    }
+    
+    
+    func probabilityGuide() {
+        print("Prob Guide")
     }
     
     
