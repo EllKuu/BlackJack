@@ -59,10 +59,10 @@ class PlayBlackJackView: UIView {
     
     lazy var guideBtn: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setTitle("New Hand", for: .normal)
+        btn.setTitle("Guide", for: .normal)
         btn.titleLabel?.font = .boldSystemFont(ofSize: 30)
         btn.backgroundColor = .white
-        btn.addTarget(self, action: #selector(newHand), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(probabilityGuide), for: .touchUpInside)
         btn.layer.cornerRadius = 5
         btn.layer.borderWidth = 1
         btn.layer.shadowOpacity = 0.5
@@ -79,17 +79,17 @@ class PlayBlackJackView: UIView {
         let sv = UIStackView(arrangedSubviews: [deckImage, guideBtn])
         sv.axis = .horizontal
         sv.distribution = .equalCentering
-        sv.layer.borderWidth = 1
+        //sv.layer.borderWidth = 1
         sv.spacing = 50
         
         return sv
     }()
     
     lazy var gameInfoStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [informationLabel, scoreLabel, innerGameInfoStackView])
+        let sv = UIStackView(arrangedSubviews: [scoreLabel, informationLabel,  innerGameInfoStackView])
         sv.axis = .vertical
         sv.distribution = .fillEqually
-        sv.layer.borderWidth = 1
+        //sv.layer.borderWidth = 1
         sv.heightAnchor.constraint(equalToConstant: 200).isActive = true
         sv.translatesAutoresizingMaskIntoConstraints = false
         
@@ -103,7 +103,7 @@ class PlayBlackJackView: UIView {
         sv.axis = .horizontal
         sv.distribution = .fillEqually
         sv.spacing = 5
-        sv.layer.borderWidth = 1
+        //sv.layer.borderWidth = 1
         sv.heightAnchor.constraint(equalToConstant: 120).isActive = true
         sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
@@ -114,7 +114,7 @@ class PlayBlackJackView: UIView {
         sv.axis = .horizontal
         sv.distribution = .fillEqually
         sv.spacing = 10
-        sv.layer.borderWidth = 1
+        //sv.layer.borderWidth = 1
         sv.heightAnchor.constraint(equalToConstant: 120).isActive = true
         sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
@@ -159,12 +159,28 @@ class PlayBlackJackView: UIView {
         return btn
     }()
     
+    lazy var newHandBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("New Hand", for: .normal)
+        btn.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        btn.backgroundColor = .white
+        btn.addTarget(self, action: #selector(newHand), for: .touchUpInside)
+        btn.layer.cornerRadius = 5
+        btn.layer.borderWidth = 1
+        btn.layer.shadowOpacity = 0.5
+        btn.layer.shadowOffset = CGSize(width: 5, height: 5)
+        
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        
+        return btn
+    }()
+    
     lazy var actionButtonStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [stayBtn, hitBtn])
+        let sv = UIStackView(arrangedSubviews: [newHandBtn, stayBtn, hitBtn])
         sv.axis = .horizontal
         sv.distribution = .fillEqually
         sv.spacing = 10
-        sv.layer.borderWidth = 1
+        //sv.layer.borderWidth = 1
         
         sv.translatesAutoresizingMaskIntoConstraints = false
         

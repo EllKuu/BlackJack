@@ -145,7 +145,6 @@ extension PlayGameViewController: PlayBlackJackProtocol{
        
         for i in 1...4{
             let card = removeCard()
-            //print(card.cardValue!)
             if i % 2 != 0 {
                 addCardToPlayersHand(card: card.cardFaceImage!)
                 if card.cardValue! == 11{
