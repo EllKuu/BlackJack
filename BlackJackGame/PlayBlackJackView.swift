@@ -76,7 +76,7 @@ class PlayBlackJackView: UIView {
     }()
     
     lazy var innerGameInfoStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [deckImage, guideBtn])
+        let sv = UIStackView(arrangedSubviews: [deckImage])
         sv.axis = .horizontal
         sv.distribution = .equalCentering
         //sv.layer.borderWidth = 1

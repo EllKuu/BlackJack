@@ -36,19 +36,19 @@ class PlayingCard {
         case 1...52:
             setCardValues(num: value)
         case 53...104:
-            setCardValues(num: 52*2 + 1 - value)
+            setCardValues(num: value - 52 * 1)
         case 105...156:
-            setCardValues(num: 52*3 + 1 - value)
+            setCardValues(num: value - 52 * 2)
         case 157...208:
-            setCardValues(num: 52*4 + 1 - value)
+            setCardValues(num: value - 52 * 3)
         case 209...260:
-            setCardValues(num: 52*5 + 1 - value)
+            setCardValues(num: value - 52 * 4)
         case 261...312:
-            setCardValues(num: 52*6 + 1 - value)
+            setCardValues(num: value - 52 * 5)
         case 313...364:
-            setCardValues(num: 52*7 + 1 - value)
+            setCardValues(num: value - 52 * 6)
         case 365...416:
-            setCardValues(num: 52*8 + 1 - value)
+            setCardValues(num: value - 52 * 7)
         default:
             print("no deck")
         }
