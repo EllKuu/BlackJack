@@ -15,7 +15,7 @@ class PlayGameViewController: UIViewController {
     var numberArray = [Int]()
     var deck = [PlayingCard]()
     
-    var testArray = [9,1,1,9,5,2,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+    var testArray = [9,1,1,9,5,2]
     
     var numberOfDecksStackView: NumberOfDecksView!
     var playBlackJackView: PlayBlackJackView!
@@ -54,8 +54,6 @@ class PlayGameViewController: UIViewController {
         case tie
         case dealerStands17PlayersTotalIsGreater
         case dealerStands17DealersTotalIsGreater
-        case dealerWins
-        case playerWins
     }
     
     
@@ -79,24 +77,25 @@ class PlayGameViewController: UIViewController {
     }
     
     func setupDeck(){
-//        let numberOfCards = self.numberOfDecks * 52
-//        numberArray = Array(1...numberOfCards)
-//
-//        for i in numberArray{
-//            let p = PlayingCard(number: i)
-//            deck.append(p)
-//        }
-        
-        for i in testArray{
+        let numberOfCards = self.numberOfDecks * 52
+        numberArray = Array(1...numberOfCards)
+
+        for i in numberArray{
             let p = PlayingCard(number: i)
             deck.append(p)
         }
         
-        //deck.shuffle()
+//        for i in testArray{
+//            let p = PlayingCard(number: i)
+//            deck.append(p)
+//        }
         
-        for i in deck{
-            print("\(i.cardNumber) - \(i.cardValue)")
-        }
+        deck.shuffle()
+        print("cards in deck \(deck.count)")
+        
+//        for i in deck{
+//            print("\(i.cardNumber) - \(i.cardValue)")
+//        }
         
     }
     
@@ -163,6 +162,10 @@ extension PlayGameViewController: PlayBlackJackProtocol{
    
     
     func dealHand() {
+        
+        if deck.count <= Int(deck.count/3){
+            reShuffleDeck()
+        }
        
         for i in 1...4{
             let card = removeCard()
@@ -207,6 +210,7 @@ extension PlayGameViewController: PlayBlackJackProtocol{
     
     func removeCard() -> PlayingCard{
         let card = deck.remove(at: 0)
+        
         return card
     }
     
@@ -294,7 +298,6 @@ extension PlayGameViewController: PlayBlackJackProtocol{
     func calculateDealersHand(){
         
         var total = 0
-        var initalHandHas2Aces = false
         
             for card in dealersHandSorted{
                 print("\(card.cardValue) - \(card.altCardValue)")
@@ -323,15 +326,6 @@ extension PlayGameViewController: PlayBlackJackProtocol{
                 
             }
         
-    
-        // total card values (if there is an ace counts as 11)
-        //compare dealers total (2 cards) to players total
-        // 1. dealers total is less than players total - draw card - calc
-        //  - keep drawing until beat players total or over 21
-        // over 21 ace changes to 1
-        
-        // case ace and any card 9 or lower that is less than players total - ace is counted as 1
-        
         
         print("Dealer total: \(total)")
         
@@ -353,9 +347,6 @@ extension PlayGameViewController: PlayBlackJackProtocol{
             self.playBlackJackView.hitBtn.isEnabled = false
             self.playBlackJackView.stayBtn.isEnabled = false
             self.playBlackJackView.newHandBtn.isEnabled = true
-            
-           
-            // new hand
         }
         else if total == 21{
             flipDealersFaceDownCard()
@@ -459,13 +450,16 @@ extension PlayGameViewController: PlayBlackJackProtocol{
             self.playBlackJackView.informationLabel.text = "Dealer shows 21. Dealer Wins."
             
             playerLoses += 1
-            
-        default:
-            print("default")
+
         }
         
         
-        
+    }
+    
+    func reShuffleDeck(){
+        print("the num decks  \(numberOfDecks)")
+        deck.removeAll()
+        setupDeck()
     }
     
     func newHand(){
@@ -483,7 +477,7 @@ extension PlayGameViewController: PlayBlackJackProtocol{
         dealersHandUnsorted.removeAll()
         
         self.playBlackJackView.informationLabel.text = "Tap deck to deal new hand."
-        print("cards in deck \(deck.count)")
+        //print("cards in deck \(deck.count)")
         
         playersHandAceCount = 0
         dealersHandAceCount = 0

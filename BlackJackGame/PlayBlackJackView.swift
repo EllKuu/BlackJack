@@ -31,6 +31,7 @@ class PlayBlackJackView: UIView {
         let label = UILabel()
         label.text = "Game Information"
         label.textAlignment = .center
+        label.numberOfLines = 2
         
         return label
     }()
