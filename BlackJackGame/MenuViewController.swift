@@ -9,20 +9,7 @@ import UIKit
 
 class MenuViewController: UIViewController {
 
-    var numberOfDecks = 1{
-        didSet{
-            
-        }
-    }
-    
-    var textLabel: UILabel = {
-        let label = UILabel()
-        label.text = "BlackJack"
-        label.font = UIFont(name: "charter black", size: 25)
-        label.numberOfLines = 2
-        label.textAlignment = .center
-        return label
-    }()
+    var numberOfDecks = 1
     
     
     var playButton: UIButton = {
@@ -53,9 +40,9 @@ class MenuViewController: UIViewController {
         return btn
     }()
     
-    var numOfDecksImage: UIImageView = {
+    var logoImage: UIImageView = {
         let deckImage = UIImageView()
-        deckImage.image = UIImage(systemName: "rectangle.on.rectangle")
+        deckImage.image = UIImage(named: "LogoImage")
         deckImage.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
         deckImage.contentMode = .scaleAspectFit
         deckImage.tintColor = .black
@@ -64,15 +51,16 @@ class MenuViewController: UIViewController {
         return deckImage
     }()
         
+    override func loadView() {
+        super.loadView()
+        view = GradientView()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
-        self.title = "BlackJack"
-        navigationController?.navigationBar.barTintColor = .green
-        
         setupMenuLayout()
     }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -88,11 +76,12 @@ class MenuViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
+    
 
     /// shuffles deck of cards player can choose how many decks 1-8
     func setupMenuLayout(){
         
-        let menuStackView = UIStackView(arrangedSubviews: [textLabel, numOfDecksImage, savedGamesButton ,playButton])
+        let menuStackView = UIStackView(arrangedSubviews: [ logoImage, savedGamesButton ,playButton])
         menuStackView.axis = .vertical
         menuStackView.distribution = .fillEqually
         menuStackView.alignment = .fill

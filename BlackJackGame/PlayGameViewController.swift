@@ -71,7 +71,7 @@ class PlayGameViewController: UIViewController {
         playBlackJackView = playBlackJack
         view.addSubview(playBlackJack)
         
-        view.backgroundColor = .red
+        view.backgroundColor = UIColor(red: 255/255, green: 0, blue: 0, alpha: 1)
         navigationController?.navigationBar.barTintColor = .red
         
     }
