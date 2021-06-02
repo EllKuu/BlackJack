@@ -22,6 +22,7 @@
 		B2784220264EC41B00EDE88D /* PlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B278421F264EC41B00EDE88D /* PlayingCard.swift */; };
 		B29D9E062666736B0013BDB9 /* colorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D9E052666736B0013BDB9 /* colorExtension.swift */; };
 		B29D9E08266696670013BDB9 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D9E07266696670013BDB9 /* GradientView.swift */; };
+		B29D9E0B2667CEE40013BDB9 /* Bungee-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B29D9E0A2667CEE40013BDB9 /* Bungee-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		B278421F264EC41B00EDE88D /* PlayingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCard.swift; sourceTree = "<group>"; };
 		B29D9E052666736B0013BDB9 /* colorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colorExtension.swift; sourceTree = "<group>"; };
 		B29D9E07266696670013BDB9 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		B29D9E0A2667CEE40013BDB9 /* Bungee-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bungee-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 		B2195D042644373D00C5F883 /* BlackJackGame */ = {
 			isa = PBXGroup;
 			children = (
+				B29D9E092667CEB80013BDB9 /* Fonts */,
 				B2195D052644373D00C5F883 /* AppDelegate.swift */,
 				B2195D072644373D00C5F883 /* SceneDelegate.swift */,
 				B2195D092644373D00C5F883 /* MenuViewController.swift */,
@@ -147,6 +150,14 @@
 				B2195D2C2644373F00C5F883 /* Info.plist */,
 			);
 			path = BlackJackGameUITests;
+			sourceTree = "<group>";
+		};
+		B29D9E092667CEB80013BDB9 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B29D9E0A2667CEE40013BDB9 /* Bungee-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,6 +266,7 @@
 				B2195D152644373F00C5F883 /* LaunchScreen.storyboard in Resources */,
 				B2195D122644373F00C5F883 /* Assets.xcassets in Resources */,
 				B2195D0D2644373D00C5F883 /* Main.storyboard in Resources */,
+				B29D9E0B2667CEE40013BDB9 /* Bungee-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

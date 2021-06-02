@@ -10,27 +10,25 @@ import UIKit
 class GradientView: UIView {
 
     let gradientLayer = CAGradientLayer()
-   
-    let lightGreen = UIColor(hex: "#4bf2c3ff")?.cgColor
-    let darkBlue = UIColor(hex: "#161c40ff")?.cgColor
+    
+    var colorsArr: [CGColor]
 
-    override init(frame: CGRect){
+    init(frame: CGRect, colors: [CGColor]){
+        self.colorsArr = colors
         super.init(frame: frame)
         commonInit()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
+    
     private func commonInit(){
-        gradientLayer.colors = [
-            darkBlue,
-            lightGreen
-        ]
+        gradientLayer.colors = colorsArr
         layer.addSublayer(gradientLayer)
     }
+
     
     override open func layoutSubviews() {
         super.layoutSubviews()

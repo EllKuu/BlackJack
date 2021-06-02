@@ -13,7 +13,8 @@ class MenuViewController: UIViewController {
         let btn = UIButton(type: .system)
         btn.setTitle("Play", for: .normal)
         btn.titleLabel?.font = .boldSystemFont(ofSize: 30)
-        btn.backgroundColor = .white
+        btn.titleLabel?.font = UIFont(name: "Bungee-Regular", size: 30)
+        btn.setTitleColor(.black, for: .normal)
         btn.addTarget(self, action: #selector(startGame), for: .touchUpInside)
         btn.layer.cornerRadius = 15
         btn.layer.borderWidth = 1
@@ -27,12 +28,14 @@ class MenuViewController: UIViewController {
         let btn = UIButton(type: .system)
         btn.setTitle("Saved Games", for: .normal)
         btn.titleLabel?.font = .boldSystemFont(ofSize: 30)
-        btn.backgroundColor = .white
+        btn.titleLabel?.font = UIFont(name: "Bungee-Regular", size: 30)
+        btn.setTitleColor(.black, for: .normal)
         btn.addTarget(self, action: #selector(savedGames), for: .touchUpInside)
         btn.layer.cornerRadius = 15
         btn.layer.borderWidth = 1
         btn.layer.shadowOpacity = 0.5
         btn.layer.shadowOffset = CGSize(width: 5, height: 5)
+        
        
         return btn
     }()
@@ -45,10 +48,17 @@ class MenuViewController: UIViewController {
         
         return image
     }()
+    
+    let lightGreen = UIColor(hex: "#4bf2c3ff")?.cgColor
+    let darkBlue = UIColor(hex: "#161c40ff")?.cgColor
+    let lightYellow = UIColor(hex: "#f2b705ff")?.cgColor
+    let darkYellow = UIColor(hex: "#f29f05ff")?.cgColor
         
     override func loadView() {
         super.loadView()
-        view = GradientView()
+        let colors = [darkBlue, lightGreen]
+        view = GradientView(frame: .zero, colors: colors as! [CGColor])
+        
     }
     
     override func viewDidLoad() {
@@ -71,31 +81,25 @@ class MenuViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
+    override func viewDidLayoutSubviews() {
+        savedGamesButton.applyGradient(colors: [lightYellow, darkYellow] as! [CGColor])
+        playButton.applyGradient(colors: [lightYellow, darkYellow] as! [CGColor])
+    }
     
 
     /// shuffles deck of cards player can choose how many decks 1-8
     func setupMenuLayout(){
         
+        
+        
+        
         view.addSubview(logoImage)
         view.addSubview(savedGamesButton)
         view.addSubview(playButton)
         
+        
+        
         setupMenuLayoutConstraints()
-        
-//        let menuStackView = UIStackView(arrangedSubviews: [ logoImage, savedGamesButton ,playButton])
-//        menuStackView.axis = .vertical
-//        menuStackView.distribution = .fillEqually
-//        menuStackView.alignment = .fill
-//        menuStackView.spacing = 25
-//        view.addSubview(menuStackView)
-//
-//        menuStackView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        menuStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
-//        menuStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-//        menuStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-//        menuStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive = true
-        
         
     }
     
@@ -107,18 +111,20 @@ class MenuViewController: UIViewController {
         
         NSLayoutConstraint.activate([
         
-            logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
-            logoImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
-            logoImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
-            logoImage.heightAnchor.constraint(equalToConstant: 250),
+            logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            logoImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            logoImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            logoImage.heightAnchor.constraint(equalToConstant: 400),
             
-            savedGamesButton.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 50),
-            savedGamesButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
-            savedGamesButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
+            savedGamesButton.bottomAnchor.constraint(equalTo: playButton.topAnchor, constant: -30),
+            savedGamesButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            savedGamesButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            savedGamesButton.heightAnchor.constraint(equalToConstant: 100),
             
-            playButton.topAnchor.constraint(equalTo: savedGamesButton.bottomAnchor, constant: 50),
-            playButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
-            playButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
+            playButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -25),
+            playButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            playButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            playButton.heightAnchor.constraint(equalToConstant: 100)
             
             
             
