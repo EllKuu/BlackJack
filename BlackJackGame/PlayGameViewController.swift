@@ -145,7 +145,7 @@ extension PlayGameViewController: NumberOfDecksProtocol{
         
         UIView.animate(withDuration: 1, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveLinear) {
             
-            //self.numberOfDecksStackView.transform = CGAffineTransform(translationX: 0, y: -200)
+            
             self.playBlackJackView.alpha = 0
             self.numberOfDecksStackView.alpha = 1
             
