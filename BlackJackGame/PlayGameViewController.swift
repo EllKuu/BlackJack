@@ -15,7 +15,7 @@ class PlayGameViewController: UIViewController {
     var numberArray = [Int]()
     var deck = [PlayingCard]()
     
-    var testArray = [9,1,1,9,5,2]
+    var testArray = [3,1,2,9,5,1,3,4,7]
     
     var numberOfDecksStackView: NumberOfDecksView!
     var playBlackJackView: PlayBlackJackView!
@@ -36,12 +36,12 @@ class PlayGameViewController: UIViewController {
     
     var playerWins = 0 {
         didSet{
-            self.playBlackJackView.scoreLabel.text = "Wins : \(playerWins) - Losses : \(playerLoses)"
+            self.playBlackJackView.scoreLabelWin.text = "Wins : \(playerWins)"
         }
     }
     var playerLoses = 0 {
         didSet{
-            self.playBlackJackView.scoreLabel.text = "Wins : \(playerWins) - Losses : \(playerLoses)"
+            self.playBlackJackView.scoreLabelLoss.text = "Losses : \(playerLoses)"
         }
     }
     
@@ -55,6 +55,12 @@ class PlayGameViewController: UIViewController {
         case dealerStands17PlayersTotalIsGreater
         case dealerStands17DealersTotalIsGreater
     }
+    
+    let gradientLayer = CAGradientLayer()
+    let lightGreen = UIColor(hex: "#4bf2c3ff")?.cgColor
+    let darkBlue = UIColor(hex: "#161c40ff")?.cgColor
+    let lightYellow = UIColor(hex: "#f2b705ff")?.cgColor
+    let darkYellow = UIColor(hex: "#f29f05ff")?.cgColor
     
     
     override func viewDidLoad() {
@@ -71,9 +77,13 @@ class PlayGameViewController: UIViewController {
         playBlackJackView = playBlackJack
         view.addSubview(playBlackJack)
         
-        view.backgroundColor = UIColor(red: 255/255, green: 0, blue: 0, alpha: 1)
-        navigationController?.navigationBar.barTintColor = .red
+        let colors = [lightGreen, darkBlue] as! [CGColor]
+        self.navigationController?.navigationBar.setGradientBackground(colors: colors)
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        numberOfDecksStackView.playButton.applyGradient(colors: [lightYellow, darkYellow] as! [CGColor])
     }
     
     func setupDeck(){
@@ -133,16 +143,18 @@ extension PlayGameViewController: NumberOfDecksProtocol{
     func gameStart() {
         print("play animation")
         
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut) {
+        UIView.animate(withDuration: 1, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveLinear) {
             
-            self.numberOfDecksStackView.transform = CGAffineTransform(translationX: 0, y: -200)
-            self.numberOfDecksStackView.alpha = 0
+            //self.numberOfDecksStackView.transform = CGAffineTransform(translationX: 0, y: -200)
+            self.playBlackJackView.alpha = 0
+            self.numberOfDecksStackView.alpha = 1
             
         }
         completion: { (_) in
-            UIView.animate(withDuration: 1, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn) {
+            UIView.animate(withDuration: 1, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseIn) {
                 
                 self.playBlackJackView.alpha = 1
+                self.numberOfDecksStackView.alpha = 0
                 
             }
             
@@ -276,7 +288,7 @@ extension PlayGameViewController: PlayBlackJackProtocol{
             total += card.cardValue!
             
             if card.cardValue! == 11{
-                if playersHandSorted.count > 2 && total >= 21{
+                if playersHandSorted.count > 2 && total > 21{
                     let newTotal = total - card.cardValue! + card.altCardValue!
                     total = newTotal
                 }
@@ -306,7 +318,7 @@ extension PlayGameViewController: PlayBlackJackProtocol{
                 if card.cardValue! == 11{
                     
                     // 2 aces in hand at start
-                    if dealersHandSorted.count > 2 && total >= 21{
+                    if dealersHandSorted.count > 2 && total > 21{
                         let newTotal = total - card.cardValue! + card.altCardValue!
                         total = newTotal
                     }

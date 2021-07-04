@@ -24,21 +24,36 @@ protocol PlayBlackJackProtocol: NSObjectProtocol {
 class PlayBlackJackView: UIView {
     
     weak var playBlackJackDelegate: PlayBlackJackProtocol? = nil
+    
+    let gradientLayer = CAGradientLayer()
+    let lightGreen = UIColor(hex: "#4bf2c3ff")?.cgColor
+    let darkBlue = UIColor(hex: "#161c40ff")?.cgColor
 
     // Game Information
     
     lazy var informationLabel: UILabel = {
         let label = UILabel()
         label.text = "Game Information"
+        label.font = UIFont(name: "Bungee-Regular", size: 20)
         label.textAlignment = .center
-        label.numberOfLines = 2
+        label.numberOfLines = 3
         
         return label
     }()
     
-    lazy var scoreLabel: UILabel = {
+    lazy var scoreLabelWin: UILabel = {
         let label = UILabel()
-        label.text = "Wins: / Losses: "
+        label.text = "Wins: "
+        label.font = UIFont(name: "Bungee-Regular", size: 20)
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
+    lazy var scoreLabelLoss: UILabel = {
+        let label = UILabel()
+        label.text = "Losses: "
+        label.font = UIFont(name: "Bungee-Regular", size: 20)
         label.textAlignment = .center
         
         return label
@@ -48,7 +63,7 @@ class PlayBlackJackView: UIView {
         let imgView = UIImageView()
         imgView.image = UIImage(named: "CardBack")
         
-        imgView.contentMode = .scaleAspectFit
+        imgView.contentMode = .scaleToFill
         imgView.backgroundColor = .clear
         imgView.clipsToBounds = true
         imgView.translatesAutoresizingMaskIntoConstraints = false
@@ -87,7 +102,7 @@ class PlayBlackJackView: UIView {
     }()
     
     lazy var gameInfoStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [scoreLabel, informationLabel,  innerGameInfoStackView])
+        let sv = UIStackView(arrangedSubviews: [scoreLabelWin, scoreLabelLoss, informationLabel])
         sv.axis = .vertical
         sv.distribution = .fillEqually
         //sv.layer.borderWidth = 1
@@ -136,6 +151,7 @@ class PlayBlackJackView: UIView {
         let btn = UIButton(type: .system)
         btn.setTitle("Stay", for: .normal)
         btn.titleLabel?.font = .boldSystemFont(ofSize: 30)
+        btn.titleLabel?.font = UIFont(name: "Bungee-Regular", size: 20)
         btn.backgroundColor = .white
         btn.addTarget(self, action: #selector(stay), for: .touchUpInside)
         btn.layer.cornerRadius = 5
@@ -150,6 +166,7 @@ class PlayBlackJackView: UIView {
         let btn = UIButton(type: .system)
         btn.setTitle("Hit", for: .normal)
         btn.titleLabel?.font = .boldSystemFont(ofSize: 30)
+        btn.titleLabel?.font = UIFont(name: "Bungee-Regular", size: 20)
         btn.backgroundColor = .white
         btn.addTarget(self, action: #selector(hit), for: .touchUpInside)
         btn.layer.cornerRadius = 5
@@ -164,6 +181,7 @@ class PlayBlackJackView: UIView {
         let btn = UIButton(type: .system)
         btn.setTitle("New Hand", for: .normal)
         btn.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        btn.titleLabel?.font = UIFont(name: "Bungee-Regular", size: 20)
         btn.backgroundColor = .white
         btn.addTarget(self, action: #selector(newHand), for: .touchUpInside)
         btn.layer.cornerRadius = 5
@@ -200,31 +218,48 @@ class PlayBlackJackView: UIView {
     
     
     private func setupView(){
+        gradientLayer.colors = [lightGreen, darkBlue] as! [CGColor]
+        layer.addSublayer(gradientLayer)
         addSubview(gameInfoStackView)
+        addSubview(deckImage)
         addSubview(dealersHandStackView)
         addSubview(playersHandStackView)
         addSubview(actionButtonStackView)
         setupLayout()
     }
     
+    override open func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if gradientLayer.frame != bounds {
+            gradientLayer.frame = bounds
+        }
+    }
+    
     private func setupLayout(){
         NSLayoutConstraint.activate([
+            
             gameInfoStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
             gameInfoStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             gameInfoStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             
+            deckImage.topAnchor.constraint(equalTo: gameInfoStackView.bottomAnchor, constant: 10),
+            deckImage.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
+            deckImage.heightAnchor.constraint(equalToConstant: 75),
+            deckImage.widthAnchor.constraint(equalToConstant: 50),
             
             dealersHandStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
             dealersHandStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-            dealersHandStackView.topAnchor.constraint(equalTo: gameInfoStackView.bottomAnchor, constant: 50),
+            dealersHandStackView.topAnchor.constraint(equalTo: deckImage.bottomAnchor, constant: 20),
             
             playersHandStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
             playersHandStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-            playersHandStackView.topAnchor.constraint(equalTo: dealersHandStackView.bottomAnchor, constant: 50),
+            playersHandStackView.topAnchor.constraint(equalTo: dealersHandStackView.bottomAnchor, constant: 25),
             
             actionButtonStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
             actionButtonStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             actionButtonStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            actionButtonStackView.heightAnchor.constraint(equalToConstant: 75)
 
             
             

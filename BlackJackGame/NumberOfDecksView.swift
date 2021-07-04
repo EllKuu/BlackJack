@@ -17,11 +17,17 @@ class NumberOfDecksView: UIView{
 
     weak var numberOfDecksDelegate: NumberOfDecksProtocol? = nil
     
+    let gradientLayer = CAGradientLayer()
+    let lightGreen = UIColor(hex: "#4bf2c3ff")?.cgColor
+    let darkBlue = UIColor(hex: "#161c40ff")?.cgColor
+    
+        
+    
     lazy var textLabel: UILabel = {
         let label = UILabel()
         label.text = "How many decks would you like to play with?"
-        label.font = UIFont(name: "charter black", size: 25)
-        label.numberOfLines = 2
+        label.font = UIFont(name: "Bungee-Regular", size: 25)
+        label.numberOfLines = 3
         label.textAlignment = .center
         return label
     }()
@@ -48,14 +54,15 @@ class NumberOfDecksView: UIView{
     
     lazy var playButton: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setTitle("Play", for: .normal)
+        btn.setTitle("Start", for: .normal)
         btn.titleLabel?.font = .boldSystemFont(ofSize: 30)
-        btn.backgroundColor = .white
+        btn.titleLabel?.font = UIFont(name: "Bungee-Regular", size: 25)
         btn.addTarget(self, action: #selector(startGame), for: .touchUpInside)
-        btn.layer.cornerRadius = 50
+        btn.layer.cornerRadius = 15
         btn.layer.borderWidth = 1
         btn.layer.shadowOpacity = 0.5
         btn.layer.shadowOffset = CGSize(width: 5, height: 5)
+        btn.setTitleColor(.black, for: .normal)
         
         return btn
     }()
@@ -81,6 +88,8 @@ class NumberOfDecksView: UIView{
     }
     
     private func setupView(){
+        gradientLayer.colors = [lightGreen, darkBlue] as! [CGColor]
+        layer.addSublayer(gradientLayer)
         addSubview(menuStackView)
         setupLayout()
     }
@@ -97,6 +106,16 @@ class NumberOfDecksView: UIView{
         ])
 
     }
+    
+    override open func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if gradientLayer.frame != bounds {
+            gradientLayer.frame = bounds
+        }
+        
+    }
+    
 
     
     
@@ -106,40 +125,9 @@ class NumberOfDecksView: UIView{
     }
     
     @objc func startGame(){
-        
         self.numberOfDecksDelegate?.gameStart()
-//       print("play animation")
-//
-//        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut) {
-//
-//            self.textLabel.transform = CGAffineTransform(translationX: 0, y: -200)
-//            self.textLabel.alpha = 0
-//            self.menuStackView.transform = CGAffineTransform(translationX: 0, y: -200)
-//            self.menuStackView.alpha = 0
-//
-//        }
-//        completion: { (_) in
-//            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut) {
-//
-//                self.textLabel.alpha = 0
-//                self.textLabel.transform = self.textLabel.transform.translatedBy(x: 0, y: -200)
-//            }
-//        }
-        
-        
-//        UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut) {
-//
-//            self.bodyLabel.transform = CGAffineTransform(translationX: -30, y: 0)
-//
-//        } completion: { (_) in
-//            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut) {
-//
-//                self.bodyLabel.alpha = 0
-//                self.bodyLabel.transform = self.bodyLabel.transform.translatedBy(x: 0, y: -200)
-//            }
-//        }
-        
-        
     }
+    
+    
 
 }

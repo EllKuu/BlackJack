@@ -56,7 +56,7 @@ class MenuViewController: UIViewController {
         
     override func loadView() {
         super.loadView()
-        let colors = [darkBlue, lightGreen]
+        let colors = [lightGreen, darkBlue ]
         view = GradientView(frame: .zero, colors: colors as! [CGColor])
         
     }
@@ -64,6 +64,7 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMenuLayout()
+        savedGamesButton.isHidden = true
     }
 
     
@@ -89,9 +90,6 @@ class MenuViewController: UIViewController {
 
     /// shuffles deck of cards player can choose how many decks 1-8
     func setupMenuLayout(){
-        
-        
-        
         
         view.addSubview(logoImage)
         view.addSubview(savedGamesButton)
