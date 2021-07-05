@@ -15,7 +15,7 @@ class PlayGameViewController: UIViewController {
     var numberArray = [Int]()
     var deck = [PlayingCard]()
     
-    var testArray = [3,1,2,9,5,1,3,4,7]
+    var testArray = [10,10,5,3,1,3,3,4,7]
     
     var numberOfDecksStackView: NumberOfDecksView!
     var playBlackJackView: PlayBlackJackView!
@@ -90,22 +90,22 @@ class PlayGameViewController: UIViewController {
         let numberOfCards = self.numberOfDecks * 52
         numberArray = Array(1...numberOfCards)
 
-        for i in numberArray{
-            let p = PlayingCard(number: i)
-            deck.append(p)
-        }
-        
-//        for i in testArray{
+//        for i in numberArray{
 //            let p = PlayingCard(number: i)
 //            deck.append(p)
 //        }
         
-        deck.shuffle()
-        print("cards in deck \(deck.count)")
+        for i in testArray{
+            let p = PlayingCard(number: i)
+            deck.append(p)
+        }
         
-//        for i in deck{
-//            print("\(i.cardNumber) - \(i.cardValue)")
-//        }
+//        deck.shuffle()
+//        print("cards in deck \(deck.count)")
+        
+        for i in deck{
+            print("\(i.cardNumber) - \(i.cardValue)")
+        }
         
     }
     
@@ -375,7 +375,7 @@ extension PlayGameViewController: PlayBlackJackProtocol{
     func dealersHandSortedResults(total: Int){
         
         if dealersTurn!{
-            if total < 17 && total < playersHandSortedTotal {
+            if total < 17 && total <= playersHandSortedTotal {
                     dealerHit()
             }
             else if total > 21 {
