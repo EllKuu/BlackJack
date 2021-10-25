@@ -83,8 +83,8 @@ class MenuViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        savedGamesButton.applyGradient(colors: [lightYellow, darkYellow] as! [CGColor])
-        playButton.applyGradient(colors: [lightYellow, darkYellow] as! [CGColor])
+        savedGamesButton.applyGradient(colors: [lightYellow!, darkYellow!])
+        playButton.applyGradient(colors: [lightYellow!, darkYellow!])
     }
     
 

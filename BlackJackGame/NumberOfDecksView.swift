@@ -88,7 +88,7 @@ class NumberOfDecksView: UIView{
     }
     
     private func setupView(){
-        gradientLayer.colors = [lightGreen, darkBlue] as! [CGColor]
+        gradientLayer.colors = [lightGreen!, darkBlue!]
         layer.addSublayer(gradientLayer)
         addSubview(menuStackView)
         setupLayout()

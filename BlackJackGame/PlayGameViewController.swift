@@ -77,36 +77,25 @@ class PlayGameViewController: UIViewController {
         playBlackJackView = playBlackJack
         view.addSubview(playBlackJack)
         
-        let colors = [lightGreen, darkBlue] as! [CGColor]
+        let colors = [lightGreen!, darkBlue!]
         self.navigationController?.navigationBar.setGradientBackground(colors: colors)
         
     }
     
     override func viewDidLayoutSubviews() {
-        numberOfDecksStackView.playButton.applyGradient(colors: [lightYellow, darkYellow] as! [CGColor])
+        numberOfDecksStackView.playButton.applyGradient(colors: [lightYellow!, darkYellow!])
     }
     
     func setupDeck(){
         let numberOfCards = self.numberOfDecks * 52
         numberArray = Array(1...numberOfCards)
 
-//        for i in numberArray{
-//            let p = PlayingCard(number: i)
-//            deck.append(p)
-//        }
-        
-        for i in testArray{
+        for i in numberArray{
             let p = PlayingCard(number: i)
             deck.append(p)
         }
         
-//        deck.shuffle()
-//        print("cards in deck \(deck.count)")
-        
-        for i in deck{
-            print("\(i.cardNumber) - \(i.cardValue)")
-        }
-        
+        deck.shuffle()
     }
     
 } // end of PlayGameViewController
@@ -141,7 +130,7 @@ extension PlayGameViewController: NumberOfDecksProtocol{
     }
     
     func gameStart() {
-        print("play animation")
+        //print("play animation")
         
         UIView.animate(withDuration: 1, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveLinear) {
             
@@ -171,7 +160,10 @@ extension PlayGameViewController: NumberOfDecksProtocol{
 }// end of extension
 
 extension PlayGameViewController: PlayBlackJackProtocol{
-   
+    
+    func probabilityGuide() {
+        
+    }
     
     func dealHand() {
         
@@ -216,7 +208,6 @@ extension PlayGameViewController: PlayBlackJackProtocol{
         self.playBlackJackView.newHandBtn.isEnabled = false
         
         calculatePlayersHand()
-        //calculateDealersHand()
         
     } // end of dealCards
     
@@ -239,7 +230,7 @@ extension PlayGameViewController: PlayBlackJackProtocol{
                 }
                 calculatePlayersHand()
             }else{
-                print("not players turn")
+                //print("not players turn")
             }
         }
     }
@@ -262,7 +253,7 @@ extension PlayGameViewController: PlayBlackJackProtocol{
     }
     
     func playerStay() {
-        print("player stay")
+        //print("player stay")
         playersTurn = false
         dealersTurn = true
         flipDealersFaceDownCard()
@@ -284,7 +275,7 @@ extension PlayGameViewController: PlayBlackJackProtocol{
         var total = 0
     
         for card in playersHandSorted{
-            print("\(card.cardValue) - \(card.altCardValue) ")
+            //print("\(card.cardValue) - \(card.altCardValue) ")
             total += card.cardValue!
             
             if card.cardValue! == 11{
@@ -295,12 +286,12 @@ extension PlayGameViewController: PlayBlackJackProtocol{
                 else if total > 21 {
                     let newTotal = total - card.cardValue! + card.altCardValue!
                     total = newTotal
-                    print("play ace")
+                    //print("play ace")
                 }
             }
         }
         
-        print("Player  total: \(total)")
+        //print("Player  total: \(total)")
         
         playersHandSortedTotal = total
         playersHandSortedResults(total: playersHandSortedTotal)
@@ -312,7 +303,7 @@ extension PlayGameViewController: PlayBlackJackProtocol{
         var total = 0
         
             for card in dealersHandSorted{
-                print("\(card.cardValue) - \(card.altCardValue)")
+                //print("\(card.cardValue) - \(card.altCardValue)")
                 total += card.cardValue!
                 
                 if card.cardValue! == 11{
@@ -326,20 +317,20 @@ extension PlayGameViewController: PlayBlackJackProtocol{
                     else if total > 21 {
                         let newTotal = total - card.cardValue! + card.altCardValue!
                         total = newTotal
-                        print("case 1")
+                        //print("case 1")
                     }
                     // ace added to the hand as 11 is still less than the oppsite hands total
                     else if total <= playersHandSortedTotal {
                         let newTotal = total - card.cardValue! + card.altCardValue!
                         total = newTotal
-                        print("case 2")
+                        //print("case 2")
                     }
                 }
                 
             }
         
         
-        print("Dealer total: \(total)")
+        //print("Dealer total: \(total)")
         
         dealersHandSortedTotal = total
         dealersHandSortedResults(total: dealersHandSortedTotal)
@@ -422,7 +413,7 @@ extension PlayGameViewController: PlayBlackJackProtocol{
             }
         }
         else{
-            print("dealers turn false")
+            //print("dealers turn false")
         }
         
        
@@ -449,12 +440,12 @@ extension PlayGameViewController: PlayBlackJackProtocol{
             self.playBlackJackView.informationLabel.text = "Hand is a draw."
             
         case .dealerStands17PlayersTotalIsGreater:
-            self.playBlackJackView.informationLabel.text = "Dealer stands on any total 17 and above, players hand is greater."
+            self.playBlackJackView.informationLabel.text = "Dealer stands on any total 17 and above. Players hand is greater."
             
             playerWins += 1
             
         case .dealerStands17DealersTotalIsGreater:
-            self.playBlackJackView.informationLabel.text = "Dealer stands on any total 17 and above, dealers hand is greater."
+            self.playBlackJackView.informationLabel.text = "Dealer stands on any total 17 and above. Dealers hand is greater."
             
             playerLoses += 1
             
@@ -469,7 +460,7 @@ extension PlayGameViewController: PlayBlackJackProtocol{
     }
     
     func reShuffleDeck(){
-        print("the num decks  \(numberOfDecks)")
+        //print("the num decks  \(numberOfDecks)")
         deck.removeAll()
         setupDeck()
     }
@@ -505,10 +496,5 @@ extension PlayGameViewController: PlayBlackJackProtocol{
         self.playBlackJackView.dealersHandStackView.insertArrangedSubview(dealersHandUnsorted[0].cardFaceImage!, at: 0)
     }
     
-    
-    func probabilityGuide() {
-        print("Prob Guide")
-    }
-    
-    
+
 }
