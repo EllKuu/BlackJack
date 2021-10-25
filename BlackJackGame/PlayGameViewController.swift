@@ -77,7 +77,7 @@ class PlayGameViewController: UIViewController {
         playBlackJackView = playBlackJack
         view.addSubview(playBlackJack)
         
-        let colors = [lightGreen, darkBlue] as! [CGColor]
+        let colors = [lightGreen, darkBlue]
         self.navigationController?.navigationBar.setGradientBackground(colors: colors)
         
     }
@@ -90,22 +90,22 @@ class PlayGameViewController: UIViewController {
         let numberOfCards = self.numberOfDecks * 52
         numberArray = Array(1...numberOfCards)
 
-//        for i in numberArray{
-//            let p = PlayingCard(number: i)
-//            deck.append(p)
-//        }
-        
-        for i in testArray{
+        for i in numberArray{
             let p = PlayingCard(number: i)
             deck.append(p)
         }
         
-//        deck.shuffle()
+//        for i in testArray{
+//            let p = PlayingCard(number: i)
+//            deck.append(p)
+//        }
+        
+        deck.shuffle()
 //        print("cards in deck \(deck.count)")
         
-        for i in deck{
-            print("\(i.cardNumber) - \(i.cardValue)")
-        }
+//        for i in deck{
+//            print("\(i.cardNumber) - \(i.cardValue)")
+//        }
         
     }
     
@@ -449,12 +449,12 @@ extension PlayGameViewController: PlayBlackJackProtocol{
             self.playBlackJackView.informationLabel.text = "Hand is a draw."
             
         case .dealerStands17PlayersTotalIsGreater:
-            self.playBlackJackView.informationLabel.text = "Dealer stands on any total 17 and above, players hand is greater."
+            self.playBlackJackView.informationLabel.text = "Dealer stands on any total 17 and above. Players hand is greater."
             
             playerWins += 1
             
         case .dealerStands17DealersTotalIsGreater:
-            self.playBlackJackView.informationLabel.text = "Dealer stands on any total 17 and above, dealers hand is greater."
+            self.playBlackJackView.informationLabel.text = "Dealer stands on any total 17 and above. Dealers hand is greater."
             
             playerLoses += 1
             
