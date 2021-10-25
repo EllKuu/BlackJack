@@ -259,7 +259,7 @@ class PlayBlackJackView: UIView {
             actionButtonStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
             actionButtonStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             actionButtonStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            actionButtonStackView.heightAnchor.constraint(equalToConstant: 75)
+            actionButtonStackView.heightAnchor.constraint(equalToConstant: 50)
 
             
             
